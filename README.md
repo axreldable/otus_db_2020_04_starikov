@@ -1,1 +1,14 @@
-# otus_db_2020_05_starikov
+# otus_db_2020_05_starikov  
+# Home tasks for Otus.ru course "Databases"
+
+
+### Student
+Aleksei Starikov  
+Group: subd-2020-04
+
+----------------------------------------------------------
+
+## HW
+
+#### [HW_1](https://github.com/axreldable/otus_db_2020_05_starikov/tree/master/hw_1)
+Create a normalized schema for data from the some_customers.csv file.
