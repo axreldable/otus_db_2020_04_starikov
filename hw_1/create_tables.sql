@@ -8,7 +8,8 @@ drop table if exists genders_tmp;
 drop table if exists marital_statuses;
 drop table if exists marital_statuses_tmp;
 drop table if exists addresses;
-drop table if exists addresses_tmp;
+drop table if exists countries;
+drop table if exists countries_tmp;
 
 create temp table if not exists titles_tmp
 (
@@ -103,44 +104,62 @@ insert into marital_statuses
 select distinct on (marital_status) *
 from marital_statuses_tmp;
 
-create temp table if not exists addresses_tmp
+create temp table if not exists countries_tmp
 (
-    id              serial primary key not null,
-    country         varchar(50)        not null,
-    postal_code     varchar(50)        not null,
-    region          varchar(50)        not null,
-    city            varchar(50)        not null,
-    street          varchar(100)       not null,
-    building_number varchar(50)        not null
+    id      serial primary key not null,
+    country varchar(30)        not null
 );
+
+create table if not exists countries
+(
+    id      serial primary key not null,
+    country varchar(30)        not null
+);
+
+COPY countries_tmp (country)
+    FROM PROGRAM 'cut -d "," -f 8 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete
+from countries_tmp
+where country = '';
+
+insert into countries
+select distinct on (country) *
+from countries_tmp;
 
 create table if not exists addresses
 (
     id              serial primary key not null,
+    country_id      integer,
     country         varchar(50)        not null,
     postal_code     varchar(50)        not null,
     region          varchar(50)        not null,
     city            varchar(50)        not null,
     street          varchar(100)       not null,
-    building_number varchar(50)        not null
+    building_number varchar(50)        not null,
+    FOREIGN KEY (country_id) REFERENCES countries (id)
 );
 
-COPY addresses_tmp (country, postal_code, region, city, street, building_number)
+COPY addresses (country, postal_code, region, city, street, building_number)
     FROM PROGRAM 'cut -d "," -f 8,9,10,11,12,13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-insert into addresses
-select *
-from addresses_tmp;
+update addresses
+set country_id = countries.id
+from countries
+where addresses.country = countries.country;
+
+alter table addresses
+    drop column country;
 
 create table if not exists users
 (
     id                      serial primary key not null,
-    title                   varchar(30)        not null,
     title_id                integer,
     language_id             integer,
     gender_id               integer,
     marital_status_id       integer,
     address_id              integer,
+    title                   varchar(30)        not null,
     first_name              varchar(50)        not null,
     last_name               varchar(50)        not null,
     correspondence_language varchar(50),
@@ -187,8 +206,7 @@ where users.marital_status = marital_statuses.marital_status;
 update users
 set address_id = addresses.id
 from addresses
-where users.country = addresses.country
-  and users.postal_code = addresses.postal_code
+where users.postal_code = addresses.postal_code
   and users.region = addresses.region
   and users.city = addresses.city
   and users.street = addresses.street
