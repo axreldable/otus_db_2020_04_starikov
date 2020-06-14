@@ -12,6 +12,8 @@ drop table if exists countries;
 drop table if exists countries_tmp;
 drop table if exists regions;
 drop table if exists regions_tmp;
+drop table if exists cities;
+drop table if exists cities_tmp;
 
 create temp table if not exists titles_tmp
 (
@@ -152,11 +154,35 @@ insert into regions
 select distinct on (region) *
 from regions_tmp;
 
+create temp table if not exists cities_tmp
+(
+    id   serial primary key not null,
+    city varchar(50)        not null
+);
+
+create table if not exists cities
+(
+    id   serial primary key not null,
+    city varchar(50)        not null
+);
+
+COPY cities_tmp (city)
+    FROM PROGRAM 'cut -d "," -f 11 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete
+from cities_tmp
+where city = '';
+
+insert into cities
+select distinct on (city) *
+from cities_tmp;
+
 create table if not exists addresses
 (
     id              serial primary key not null,
     country_id      integer,
     region_id       integer,
+    city_id         integer,
     country         varchar(50)        not null,
     postal_code     varchar(50)        not null,
     region          varchar(50)        not null,
@@ -164,7 +190,8 @@ create table if not exists addresses
     street          varchar(100)       not null,
     building_number varchar(50)        not null,
     FOREIGN KEY (country_id) REFERENCES countries (id),
-    FOREIGN KEY (region_id) REFERENCES regions (id)
+    FOREIGN KEY (region_id) REFERENCES regions (id),
+    FOREIGN KEY (city_id) REFERENCES cities (id)
 );
 
 COPY addresses (country, postal_code, region, city, street, building_number)
@@ -180,8 +207,14 @@ set region_id = regions.id
 from regions
 where addresses.region = regions.region;
 
+update addresses
+set city_id = cities.id
+from cities
+where addresses.city = cities.city;
+
 alter table addresses
     drop column country,
+    drop column city,
     drop column region;
 
 create table if not exists users
@@ -240,7 +273,6 @@ update users
 set address_id = addresses.id
 from addresses
 where users.postal_code = addresses.postal_code
-  and users.city = addresses.city
   and users.street = addresses.street
   and users.building_number = addresses.building_number;
 
