@@ -7,6 +7,8 @@ drop table if exists genders;
 drop table if exists genders_tmp;
 drop table if exists marital_statuses;
 drop table if exists marital_statuses_tmp;
+drop table if exists addresses;
+drop table if exists addresses_tmp;
 
 create temp table if not exists titles_tmp
 (
@@ -101,6 +103,35 @@ insert into marital_statuses
 select distinct on (marital_status) *
 from marital_statuses_tmp;
 
+create temp table if not exists addresses_tmp
+(
+    id              serial primary key not null,
+    country         varchar(50)        not null,
+    postal_code     varchar(50)        not null,
+    region          varchar(50)        not null,
+    city            varchar(50)        not null,
+    street          varchar(100)       not null,
+    building_number varchar(50)        not null
+);
+
+create table if not exists addresses
+(
+    id              serial primary key not null,
+    country         varchar(50)        not null,
+    postal_code     varchar(50)        not null,
+    region          varchar(50)        not null,
+    city            varchar(50)        not null,
+    street          varchar(100)       not null,
+    building_number varchar(50)        not null
+);
+
+COPY addresses_tmp (country, postal_code, region, city, street, building_number)
+    FROM PROGRAM 'cut -d "," -f 8,9,10,11,12,13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+insert into addresses
+select *
+from addresses_tmp;
+
 create table if not exists users
 (
     id                      serial primary key not null,
@@ -109,6 +140,7 @@ create table if not exists users
     language_id             integer,
     gender_id               integer,
     marital_status_id       integer,
+    address_id              integer,
     first_name              varchar(50)        not null,
     last_name               varchar(50)        not null,
     correspondence_language varchar(50),
@@ -124,7 +156,8 @@ create table if not exists users
     FOREIGN KEY (title_id) REFERENCES titles (id),
     FOREIGN KEY (language_id) REFERENCES languages (id),
     FOREIGN KEY (gender_id) REFERENCES genders (id),
-    FOREIGN KEY (marital_status_id) REFERENCES marital_statuses (id)
+    FOREIGN KEY (marital_status_id) REFERENCES marital_statuses (id),
+    FOREIGN KEY (address_id) REFERENCES ADDRESSES (id)
 );
 
 COPY users (title, first_name, last_name, correspondence_language, birth_date, gender, marital_status, country,
@@ -151,8 +184,24 @@ set gender_id = marital_statuses.id
 from marital_statuses
 where users.marital_status = marital_statuses.marital_status;
 
+update users
+set address_id = addresses.id
+from addresses
+where users.country = addresses.country
+  and users.postal_code = addresses.postal_code
+  and users.region = addresses.region
+  and users.city = addresses.city
+  and users.street = addresses.street
+  and users.building_number = addresses.building_number;
+
 alter table users
     drop column title,
     drop column correspondence_language,
     drop column gender,
-    drop column marital_status;
+    drop column marital_status,
+    drop column country,
+    drop column postal_code,
+    drop column region,
+    drop column city,
+    drop column street,
+    drop column building_number;
