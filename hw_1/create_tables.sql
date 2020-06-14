@@ -112,7 +112,7 @@ create table if not exists users
     first_name              varchar(50)        not null,
     last_name               varchar(50)        not null,
     correspondence_language varchar(50),
-    birth_date              varchar(50),
+    birth_date              date,
     gender                  varchar(50)        not null,
     marital_status          varchar(50)        not null,
     country                 varchar(50)        not null,
