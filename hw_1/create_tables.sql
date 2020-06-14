@@ -21,6 +21,9 @@ create table if not exists titles
 COPY titles_tmp (title)
     FROM PROGRAM 'cut -d "," -f 1 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
+delete from titles_tmp
+where title = '';
+
 insert into titles
 select distinct on (title) *
 from titles_tmp;
