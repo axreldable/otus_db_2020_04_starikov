@@ -1,4 +1,4 @@
-drop table if exists hw_1;
+drop table if exists users;
 drop table if exists titles;
 drop table if exists titles_tmp;
 drop table if exists languages;
@@ -101,7 +101,7 @@ insert into marital_statuses
 select distinct on (marital_status) *
 from marital_statuses_tmp;
 
-create table if not exists hw_1
+create table if not exists users
 (
     id                      serial primary key not null,
     title                   varchar(30)        not null,
@@ -127,31 +127,31 @@ create table if not exists hw_1
     FOREIGN KEY (marital_status_id) REFERENCES marital_statuses (id)
 );
 
-COPY hw_1 (title, first_name, last_name, correspondence_language, birth_date, gender, marital_status, country,
-           postal_code, region, city, street, building_number)
+COPY users (title, first_name, last_name, correspondence_language, birth_date, gender, marital_status, country,
+            postal_code, region, city, street, building_number)
     FROM '/tmp/input_data/some_customers.csv' DELIMITER ',' CSV HEADER;
 
-update hw_1
+update users
 set title_id = titles.id
 from titles
-where hw_1.title = titles.title;
+where users.title = titles.title;
 
-update hw_1
+update users
 set language_id = languages.id
 from languages
-where hw_1.correspondence_language = languages.language;
+where users.correspondence_language = languages.language;
 
-update hw_1
+update users
 set gender_id = genders.id
 from genders
-where hw_1.gender = genders.gender;
+where users.gender = genders.gender;
 
-update hw_1
+update users
 set gender_id = marital_statuses.id
 from marital_statuses
-where hw_1.marital_status = marital_statuses.marital_status;
+where users.marital_status = marital_statuses.marital_status;
 
-alter table hw_1
+alter table users
     drop column title,
     drop column correspondence_language,
     drop column gender,
