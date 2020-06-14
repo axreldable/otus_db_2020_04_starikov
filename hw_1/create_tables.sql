@@ -23,7 +23,8 @@ create table if not exists titles
 COPY titles_tmp (title)
     FROM PROGRAM 'cut -d "," -f 1 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete from titles_tmp
+delete
+from titles_tmp
 where title = '';
 
 insert into titles
@@ -39,13 +40,14 @@ create temp table if not exists languages_tmp
 create table if not exists languages
 (
     id       serial primary key not null,
-    language varchar(30) not null
+    language varchar(30)        not null
 );
 
 COPY languages_tmp (language)
     FROM PROGRAM 'cut -d "," -f 4 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete from languages_tmp
+delete
+from languages_tmp
 where language is null;
 
 insert into languages
@@ -54,21 +56,22 @@ from languages_tmp;
 
 create temp table if not exists genders_tmp
 (
-    id    serial primary key not null,
+    id     serial primary key not null,
     gender varchar(30)        not null
 );
 
 create table if not exists genders
 (
-    id    serial primary key not null,
+    id     serial primary key not null,
     gender varchar(30)        not null
 );
 
 COPY genders_tmp (gender)
     FROM PROGRAM 'cut -d "," -f 6 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete from genders_tmp
-where gender is null or gender = '';
+delete
+from genders_tmp
+where gender = '';
 
 insert into genders
 select distinct on (gender) *
@@ -76,21 +79,23 @@ from genders_tmp;
 
 create temp table if not exists marital_statuses_tmp
 (
-    id    serial primary key not null,
+    id             serial primary key not null,
     marital_status varchar(30)
 );
 
 create table if not exists marital_statuses
 (
-    id    serial primary key not null,
+    id             serial primary key not null,
     marital_status varchar(30)        not null
 );
 
 COPY marital_statuses_tmp (marital_status)
     FROM PROGRAM 'cut -d "," -f 7 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete from marital_statuses_tmp
-where marital_status is null or marital_status = '';
+delete
+from marital_statuses_tmp
+where marital_status is null
+   or marital_status = '';
 
 insert into marital_statuses
 select distinct on (marital_status) *
@@ -102,8 +107,8 @@ create table if not exists hw_1
     title                   varchar(30)        not null,
     title_id                integer,
     language_id             integer,
-    gender_id             integer,
-    marital_status_id             integer,
+    gender_id               integer,
+    marital_status_id       integer,
     first_name              varchar(50)        not null,
     last_name               varchar(50)        not null,
     correspondence_language varchar(50),
