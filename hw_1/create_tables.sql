@@ -10,6 +10,8 @@ drop table if exists marital_statuses_tmp;
 drop table if exists addresses;
 drop table if exists countries;
 drop table if exists countries_tmp;
+drop table if exists regions;
+drop table if exists regions_tmp;
 
 create temp table if not exists titles_tmp
 (
@@ -127,17 +129,42 @@ insert into countries
 select distinct on (country) *
 from countries_tmp;
 
+create temp table if not exists regions_tmp
+(
+    id     serial primary key not null,
+    region varchar(30)        not null
+);
+
+create table if not exists regions
+(
+    id     serial primary key not null,
+    region varchar(30)        not null
+);
+
+COPY regions_tmp (region)
+    FROM PROGRAM 'cut -d "," -f 10 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete
+from regions_tmp
+where region = '';
+
+insert into regions
+select distinct on (region) *
+from regions_tmp;
+
 create table if not exists addresses
 (
     id              serial primary key not null,
     country_id      integer,
+    region_id       integer,
     country         varchar(50)        not null,
     postal_code     varchar(50)        not null,
     region          varchar(50)        not null,
     city            varchar(50)        not null,
     street          varchar(100)       not null,
     building_number varchar(50)        not null,
-    FOREIGN KEY (country_id) REFERENCES countries (id)
+    FOREIGN KEY (country_id) REFERENCES countries (id),
+    FOREIGN KEY (region_id) REFERENCES regions (id)
 );
 
 COPY addresses (country, postal_code, region, city, street, building_number)
@@ -148,8 +175,14 @@ set country_id = countries.id
 from countries
 where addresses.country = countries.country;
 
+update addresses
+set region_id = regions.id
+from regions
+where addresses.region = regions.region;
+
 alter table addresses
-    drop column country;
+    drop column country,
+    drop column region;
 
 create table if not exists users
 (
@@ -207,7 +240,6 @@ update users
 set address_id = addresses.id
 from addresses
 where users.postal_code = addresses.postal_code
-  and users.region = addresses.region
   and users.city = addresses.city
   and users.street = addresses.street
   and users.building_number = addresses.building_number;
