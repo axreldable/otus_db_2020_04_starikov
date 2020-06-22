@@ -13,6 +13,7 @@ drop table if exists regions;
 drop table if exists cities;
 drop table if exists streets;
 drop table if exists houses;
+drop table if exists houses_tmp;
 
 create temp table if not exists titles_tmp
 (
@@ -107,15 +108,30 @@ insert into marital_statuses
 select distinct on (marital_status) *
 from marital_statuses_tmp;
 
+--------------------------------------------------------
 create table if not exists houses
 (
     id              serial primary key not null,
     building_number varchar(50)        not null
 );
 
-COPY houses (building_number)
+create table if not exists houses_tmp
+(
+    id              serial primary key not null,
+    building_number varchar(50)        not null
+);
+
+COPY houses_tmp (building_number)
     FROM PROGRAM 'cut -d "," -f 13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
+delete from houses_tmp
+where building_number is null or building_number = '';
+
+insert into houses
+select distinct on (building_number) *
+from houses_tmp;
+
+--------------------------------------------------------
 create table if not exists streets
 (
     id              serial primary key not null,
