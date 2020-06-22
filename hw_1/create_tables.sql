@@ -201,18 +201,22 @@ alter table countries
 create table if not exists addresses
 (
     id              serial primary key not null,
+    house_id        integer,
+    street_id       integer,
+    city_id         integer,
     country_id      integer,
     region_id       integer,
-    city_id         integer,
-    country         varchar(50)        not null,
-    postal_code     varchar(50)        not null,
-    region          varchar(50)        not null,
-    city            varchar(50)        not null,
-    street          varchar(100)       not null,
     building_number varchar(50)        not null,
+    street          varchar(100)       not null,
+    city            varchar(50)        not null,
+    country         varchar(50)        not null,
+    region          varchar(50)        not null,
+    postal_code     varchar(50)        not null,
+    FOREIGN KEY (house_id) REFERENCES cities (id),
+    FOREIGN KEY (street_id) REFERENCES cities (id),
+    FOREIGN KEY (city_id) REFERENCES cities (id),
     FOREIGN KEY (country_id) REFERENCES countries (id),
-    FOREIGN KEY (region_id) REFERENCES regions (id),
-    FOREIGN KEY (city_id) REFERENCES cities (id)
+    FOREIGN KEY (region_id) REFERENCES regions (id)
 );
 
 COPY addresses (country, postal_code, region, city, street, building_number)
@@ -233,10 +237,22 @@ set city_id = cities.id
 from cities
 where addresses.city = cities.city;
 
+update addresses
+set street_id = streets.id
+from streets
+where addresses.street = streets.street;
+
+update addresses
+set house_id = houses.id
+from houses
+where addresses.building_number = houses.building_number;
+
 alter table addresses
     drop column country,
     drop column city,
-    drop column region;
+    drop column region,
+    drop column street,
+    drop column building_number;
 
 create table if not exists customers
 (
@@ -293,9 +309,7 @@ where customers.marital_status = marital_statuses.marital_status;
 update customers
 set address_id = addresses.id
 from addresses
-where customers.postal_code = addresses.postal_code
-  and customers.street = addresses.street
-  and customers.building_number = addresses.building_number;
+where customers.postal_code = addresses.postal_code;
 
 alter table customers
     drop column title,
