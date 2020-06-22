@@ -12,6 +12,7 @@ drop table if exists countries;
 drop table if exists regions;
 drop table if exists cities;
 drop table if exists streets;
+drop table if exists streets_tmp;
 drop table if exists houses;
 drop table if exists houses_tmp;
 
@@ -131,6 +132,8 @@ insert into houses
 select distinct on (building_number) *
 from houses_tmp;
 
+drop table houses_tmp;
+
 --------------------------------------------------------
 create table if not exists streets
 (
@@ -141,8 +144,24 @@ create table if not exists streets
     FOREIGN KEY (house_id) REFERENCES houses (id)
 );
 
-COPY streets (street, building_number)
+create table if not exists streets_tmp
+(
+    id              serial primary key not null,
+    house_id        integer,
+    street          varchar(100)       not null,
+    building_number varchar(50)        not null,
+    FOREIGN KEY (house_id) REFERENCES houses (id)
+);
+
+COPY streets_tmp (street, building_number)
     FROM PROGRAM 'cut -d "," -f 12,13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete from streets_tmp
+where street is null or street = '';
+
+insert into streets (street, building_number)
+select distinct street, building_number
+from streets_tmp;
 
 update streets
 set house_id = houses.id
@@ -152,7 +171,9 @@ where streets.building_number = houses.building_number;
 alter table streets
     drop column building_number;
 
+drop table streets_tmp;
 
+--------------------------------------------------------
 create table if not exists cities
 (
     id        serial primary key not null,
