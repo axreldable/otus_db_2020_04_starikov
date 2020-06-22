@@ -9,7 +9,6 @@ drop table if exists marital_statuses;
 drop table if exists marital_statuses_tmp;
 drop table if exists addresses;
 drop table if exists countries;
-drop table if exists countries_tmp;
 drop table if exists regions;
 drop table if exists regions_tmp;
 drop table if exists cities;
@@ -108,29 +107,6 @@ insert into marital_statuses
 select distinct on (marital_status) *
 from marital_statuses_tmp;
 
-create temp table if not exists countries_tmp
-(
-    id      serial primary key not null,
-    country varchar(30)        not null
-);
-
-create table if not exists countries
-(
-    id      serial primary key not null,
-    country varchar(30)        not null
-);
-
-COPY countries_tmp (country)
-    FROM PROGRAM 'cut -d "," -f 8 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
-
-delete
-from countries_tmp
-where country = '';
-
-insert into countries
-select distinct on (country) *
-from countries_tmp;
-
 create temp table if not exists regions_tmp
 (
     id     serial primary key not null,
@@ -184,6 +160,27 @@ where cities.street = streets.street;
 
 alter table cities
     drop column street;
+
+
+create table if not exists countries
+(
+    id      serial primary key not null,
+    city_id integer,
+    country varchar(30)        not null,
+    city    varchar(50)        not null,
+    FOREIGN KEY (city_id) REFERENCES cities (id)
+);
+
+COPY countries (country, city)
+    FROM PROGRAM 'cut -d "," -f 8,11 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+update countries
+set city_id = cities.id
+from cities
+where countries.city = cities.city;
+
+alter table countries
+    drop column city;
 
 
 create table if not exists addresses
