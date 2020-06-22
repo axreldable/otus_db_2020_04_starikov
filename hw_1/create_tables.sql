@@ -12,6 +12,7 @@ drop table if exists countries;
 drop table if exists regions;
 drop table if exists cities;
 drop table if exists streets;
+drop table if exists houses;
 
 create temp table if not exists titles_tmp
 (
@@ -106,15 +107,34 @@ insert into marital_statuses
 select distinct on (marital_status) *
 from marital_statuses_tmp;
 
+create table if not exists houses
+(
+    id              serial primary key not null,
+    building_number varchar(50)        not null
+);
+
+COPY houses (building_number)
+    FROM PROGRAM 'cut -d "," -f 13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
 create table if not exists streets
 (
     id              serial primary key not null,
+    house_id        integer,
     street          varchar(100)       not null,
-    building_number varchar(50)        not null
+    building_number varchar(50)        not null,
+    FOREIGN KEY (house_id) REFERENCES houses (id)
 );
 
 COPY streets (street, building_number)
     FROM PROGRAM 'cut -d "," -f 12,13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+update streets
+set house_id = houses.id
+from houses
+where streets.building_number = houses.building_number;
+
+alter table streets
+    drop column building_number;
 
 
 create table if not exists cities
