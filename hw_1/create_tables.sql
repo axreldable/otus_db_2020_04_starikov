@@ -1,4 +1,4 @@
-drop table if exists users;
+drop table if exists customers;
 drop table if exists titles;
 drop table if exists titles_tmp;
 drop table if exists languages;
@@ -13,7 +13,7 @@ drop table if exists countries_tmp;
 drop table if exists regions;
 drop table if exists regions_tmp;
 drop table if exists cities;
-drop table if exists cities_tmp;
+drop table if exists streets;
 
 create temp table if not exists titles_tmp
 (
@@ -154,28 +154,37 @@ insert into regions
 select distinct on (region) *
 from regions_tmp;
 
-create temp table if not exists cities_tmp
+create table if not exists streets
 (
-    id   serial primary key not null,
-    city varchar(50)        not null
+    id              serial primary key not null,
+    street          varchar(100)       not null,
+    building_number varchar(50)        not null
 );
+
+COPY streets (street, building_number)
+    FROM PROGRAM 'cut -d "," -f 12,13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
 
 create table if not exists cities
 (
-    id   serial primary key not null,
-    city varchar(50)        not null
+    id        serial primary key not null,
+    street_id integer,
+    city      varchar(50)        not null,
+    street    varchar(100)       not null,
+    FOREIGN KEY (street_id) REFERENCES streets (id)
 );
 
-COPY cities_tmp (city)
-    FROM PROGRAM 'cut -d "," -f 11 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+COPY cities (city, street)
+    FROM PROGRAM 'cut -d "," -f 11,12 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete
-from cities_tmp
-where city = '';
+update cities
+set street_id = streets.id
+from streets
+where cities.street = streets.street;
 
-insert into cities
-select distinct on (city) *
-from cities_tmp;
+alter table cities
+    drop column street;
+
 
 create table if not exists addresses
 (
@@ -217,7 +226,7 @@ alter table addresses
     drop column city,
     drop column region;
 
-create table if not exists users
+create table if not exists customers
 (
     id                      serial primary key not null,
     title_id                integer,
@@ -245,38 +254,38 @@ create table if not exists users
     FOREIGN KEY (address_id) REFERENCES ADDRESSES (id)
 );
 
-COPY users (title, first_name, last_name, correspondence_language, birth_date, gender, marital_status, country,
-            postal_code, region, city, street, building_number)
+COPY customers (title, first_name, last_name, correspondence_language, birth_date, gender, marital_status, country,
+                postal_code, region, city, street, building_number)
     FROM '/tmp/input_data/some_customers.csv' DELIMITER ',' CSV HEADER;
 
-update users
+update customers
 set title_id = titles.id
 from titles
-where users.title = titles.title;
+where customers.title = titles.title;
 
-update users
+update customers
 set language_id = languages.id
 from languages
-where users.correspondence_language = languages.language;
+where customers.correspondence_language = languages.language;
 
-update users
+update customers
 set gender_id = genders.id
 from genders
-where users.gender = genders.gender;
+where customers.gender = genders.gender;
 
-update users
+update customers
 set gender_id = marital_statuses.id
 from marital_statuses
-where users.marital_status = marital_statuses.marital_status;
+where customers.marital_status = marital_statuses.marital_status;
 
-update users
+update customers
 set address_id = addresses.id
 from addresses
-where users.postal_code = addresses.postal_code
-  and users.street = addresses.street
-  and users.building_number = addresses.building_number;
+where customers.postal_code = addresses.postal_code
+  and customers.street = addresses.street
+  and customers.building_number = addresses.building_number;
 
-alter table users
+alter table customers
     drop column title,
     drop column correspondence_language,
     drop column gender,
