@@ -9,6 +9,7 @@ drop table if exists marital_statuses;
 drop table if exists marital_statuses_tmp;
 drop table if exists addresses;
 drop table if exists regions;
+drop table if exists regions_tmp;
 drop table if exists countries;
 drop table if exists countries_tmp;
 drop table if exists cities;
@@ -234,8 +235,26 @@ create table if not exists regions
     FOREIGN KEY (city_id) REFERENCES cities (id)
 );
 
-COPY regions (region, city)
+create table if not exists regions_tmp
+(
+    id      serial primary key not null,
+    city_id integer,
+    region  varchar(30)        not null,
+    city    varchar(50)        not null,
+    FOREIGN KEY (city_id) REFERENCES cities (id)
+);
+
+COPY regions_tmp (region, city)
     FROM PROGRAM 'cut -d "," -f 10,11 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete
+from regions_tmp
+where region is null
+   or region = '';
+
+insert into regions (region, city)
+select distinct region, city
+from regions_tmp;
 
 update regions
 set city_id = cities.id
@@ -244,6 +263,8 @@ where regions.city = cities.city;
 
 alter table regions
     drop column city;
+
+drop table regions_tmp;
 
 --------------------------------------------------------
 create table if not exists countries
