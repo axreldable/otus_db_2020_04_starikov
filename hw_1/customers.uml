@@ -3,112 +3,135 @@
   <ID>DATABASE</ID>
   <OriginalElement>b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses</OriginalElement>
   <nodes>
-    <node x="883.4328431372548" y="324.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities</node>
-    <node x="0.0" y="725.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.titles</node>
-    <node x="908.6176470588235" y="497.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.countries</node>
-    <node x="742.6176470588235" y="497.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.regions</node>
-    <node x="503.0" y="725.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.marital_statuses</node>
-    <node x="686.906862745098" y="0.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.houses</node>
-    <node x="150.0" y="725.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.genders</node>
-    <node x="305.1176470588235" y="931.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.customers</node>
-    <node x="320.0" y="725.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.languages</node>
-    <node x="759.906862745098" y="151.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.streets</node>
-    <node x="731.0" y="670.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses</node>
+    <node x="366.5" y="519.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.countries</node>
+    <node x="165.5" y="497.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.postal_codes</node>
+    <node x="769.0" y="779.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.titles</node>
+    <node x="442.5" y="324.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities</node>
+    <node x="534.5" y="519.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.regions</node>
+    <node x="173.32976190476185" y="0.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.houses</node>
+    <node x="0.0" y="779.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.genders</node>
+    <node x="391.5" y="985.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.customers</node>
+    <node x="434.7063492063492" y="151.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.streets</node>
+    <node x="586.0" y="779.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.languages</node>
+    <node x="170.0" y="779.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.marital_statuses</node>
+    <node x="398.0" y="724.0">b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses</node>
   </nodes>
   <notes />
   <edges>
+    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.postal_codes" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities">
+      <point x="60.333333333333314" y="-83.5" />
+      <point x="316.3333333333333" y="467.0" />
+      <point x="458.75" y="467.0" />
+      <point x="-48.75" y="61.5" />
+    </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.customers" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.marital_statuses">
-      <point x="36.200000000000045" y="-127.5" />
-      <point x="431.8176470588235" y="901.0" />
-      <point x="607.0" y="901.0" />
+      <point x="-36.19999999999999" y="-127.5" />
+      <point x="445.8" y="955.0" />
+      <point x="274.0" y="955.0" />
       <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.streets">
+      <point x="69.99999999999999" y="-105.5" />
+      <point x="552.0" y="704.0" />
+      <point x="691.0" y="704.0" />
+      <point x="691.0" y="299.0" />
+      <point x="558.8730158730159" y="299.0" />
+      <point x="49.66666666666663" y="61.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.countries" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities">
       <point x="0.0" y="-61.5" />
-      <point x="986.1176470588235" y="472.0" />
-      <point x="948.4328431372548" y="472.0" />
-      <point x="0.0" y="61.5" />
-    </edge>
-    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.streets">
-      <point x="-36.2" y="-105.5" />
-      <point x="785.3" y="640.0" />
-      <point x="732.1176470588235" y="640.0" />
-      <point x="732.1176470588235" y="299.0" />
-      <point x="797.156862745098" y="299.0" />
-      <point x="-37.25" y="61.5" />
+      <point x="440.0" y="477.0" />
+      <point x="491.25" y="477.0" />
+      <point x="-16.25" y="61.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.customers" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.titles">
-      <point x="-72.39999999999998" y="-127.5" />
-      <point x="323.2176470588235" y="911.0" />
-      <point x="65.0" y="911.0" />
+      <point x="72.39999999999998" y="-127.5" />
+      <point x="554.4" y="965.0" />
+      <point x="834.0" y="965.0" />
       <point x="0.0" y="50.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.houses">
-      <point x="-72.4" y="-105.5" />
-      <point x="749.1" y="650.0" />
-      <point x="702.7426470588235" y="650.0" />
-      <point x="702.7426470588235" y="126.0" />
-      <point x="739.406862745098" y="126.0" />
-      <point x="-52.5" y="50.5" />
+      <point x="-70.0" y="-105.5" />
+      <point x="412.0" y="704.0" />
+      <point x="155.00000000000003" y="704.0" />
+      <point x="155.00000000000003" y="121.0" />
+      <point x="208.32976190476185" y="121.0" />
+      <point x="-70.0" y="50.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.regions">
-      <point x="0.0" y="-105.5" />
-      <point x="821.5" y="650.0" />
-      <point x="815.6176470588235" y="650.0" />
+      <point x="42.0" y="-105.5" />
+      <point x="524.0" y="694.0" />
+      <point x="607.5" y="694.0" />
       <point x="0.0" y="61.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.customers" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses">
-      <point x="72.39999999999998" y="-127.5" />
-      <point x="468.01764705882346" y="911.0" />
-      <point x="821.5" y="911.0" />
+      <point x="0.0" y="-127.5" />
       <point x="0.0" y="105.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.streets">
       <point x="0.0" y="-61.5" />
-      <point x="948.4328431372548" y="299.0" />
-      <point x="871.656862745098" y="299.0" />
-      <point x="37.25" y="61.5" />
+      <point x="507.5" y="299.0" />
+      <point x="509.2063492063492" y="299.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.postal_codes" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.houses">
+      <point x="-60.33333333333337" y="-83.5" />
+      <point x="195.66666666666663" y="477.0" />
+      <point x="205.5" y="477.0" />
+      <point x="205.5" y="131.0" />
+      <point x="278.3297619047619" y="131.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.postal_codes" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.streets">
+      <point x="0.0" y="-83.5" />
+      <point x="256.0" y="299.0" />
+      <point x="459.53968253968253" y="299.0" />
+      <point x="-49.666666666666686" y="61.5" />
+    </edge>
+    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.postal_codes">
+      <point x="-42.0" y="-105.5" />
+      <point x="440.0" y="694.0" />
+      <point x="256.0" y="694.0" />
+      <point x="0.0" y="83.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.countries">
-      <point x="36.19999999999999" y="-105.5" />
-      <point x="857.7" y="640.0" />
-      <point x="986.1176470588235" y="640.0" />
+      <point x="-14.0" y="-105.5" />
+      <point x="468.0" y="684.0" />
+      <point x="440.0" y="684.0" />
       <point x="0.0" y="61.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.customers" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.languages">
-      <point x="0.0" y="-127.5" />
-      <point x="395.6176470588235" y="911.0" />
-      <point x="401.5" y="911.0" />
+      <point x="36.200000000000045" y="-127.5" />
+      <point x="518.2" y="955.0" />
+      <point x="667.5" y="955.0" />
       <point x="0.0" y="50.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.streets" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.houses">
       <point x="0.0" y="-61.5" />
-      <point x="834.406862745098" y="126.0" />
-      <point x="844.406862745098" y="126.0" />
-      <point x="52.5" y="50.5" />
-    </edge>
-    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities">
-      <point x="72.4" y="-105.5" />
-      <point x="893.9" y="650.0" />
-      <point x="1074.1176470588234" y="650.0" />
-      <point x="1074.1176470588234" y="472.0" />
-      <point x="991.7661764705881" y="472.0" />
-      <point x="43.333333333333314" y="61.5" />
+      <point x="509.2063492063492" y="131.0" />
+      <point x="348.3297619047619" y="131.0" />
+      <point x="70.0" y="50.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.customers" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.genders">
-      <point x="-36.200000000000045" y="-127.5" />
-      <point x="359.41764705882343" y="901.0" />
-      <point x="225.0" y="901.0" />
+      <point x="-72.39999999999998" y="-127.5" />
+      <point x="409.6" y="965.0" />
+      <point x="75.0" y="965.0" />
       <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities">
+      <point x="14.0" y="-105.5" />
+      <point x="496.0" y="684.0" />
+      <point x="524.0" y="684.0" />
+      <point x="16.25" y="61.5" />
     </edge>
     <edge source="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.regions" target="b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.cities">
       <point x="0.0" y="-61.5" />
-      <point x="815.6176470588235" y="472.0" />
-      <point x="905.0995098039215" y="472.0" />
-      <point x="-43.33333333333334" y="61.5" />
+      <point x="607.5" y="477.0" />
+      <point x="556.25" y="477.0" />
+      <point x="48.75" y="61.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="537.5" y="593.0" />
+  <settings layout="Hierarchic Group" zoom="0.5547619047619048" x="449.5" y="620.0" />
   <SelectedNodes>
     <node>b3498904-799a-466d-9060-b7133633180f.TABLE:postgres.public.addresses</node>
   </SelectedNodes>

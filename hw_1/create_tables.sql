@@ -12,6 +12,8 @@ drop table if exists regions;
 drop table if exists regions_tmp;
 drop table if exists countries;
 drop table if exists countries_tmp;
+drop table if exists postal_codes;
+drop table if exists postal_codes_tmp;
 drop table if exists cities;
 drop table if exists cities_tmp;
 drop table if exists streets;
@@ -226,6 +228,71 @@ alter table cities
 drop table cities_tmp;
 
 --------------------------------------------------------
+create table if not exists postal_codes
+(
+    id              serial primary key not null,
+    house_id        integer,
+    street_id       integer,
+    city_id         integer,
+    building_number varchar(50)        not null,
+    street          varchar(100)       not null,
+    city            varchar(50)        not null,
+    postal_code     varchar(50)        not null,
+    FOREIGN KEY (house_id) REFERENCES houses (id),
+    FOREIGN KEY (street_id) REFERENCES streets (id),
+    FOREIGN KEY (city_id) REFERENCES cities (id)
+);
+
+create table if not exists postal_codes_tmp
+(
+    id              serial primary key not null,
+    house_id        integer,
+    street_id       integer,
+    city_id         integer,
+    building_number varchar(50)        not null,
+    street          varchar(100)       not null,
+    city            varchar(50)        not null,
+    postal_code     varchar(50)        not null,
+    FOREIGN KEY (house_id) REFERENCES houses (id),
+    FOREIGN KEY (street_id) REFERENCES streets (id),
+    FOREIGN KEY (city_id) REFERENCES cities (id)
+);
+
+COPY postal_codes_tmp (postal_code, city, street, building_number)
+    FROM PROGRAM 'cut -d "," -f 9,11,12,13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete
+from postal_codes_tmp
+where postal_code is null
+   or postal_code = '';
+
+insert into postal_codes (postal_code, city, street, building_number)
+select distinct postal_code, city, street, building_number
+from postal_codes_tmp;
+
+update postal_codes
+set house_id = houses.id
+from houses
+where postal_codes.building_number = houses.building_number;
+
+update postal_codes
+set street_id = streets.id
+from streets
+where postal_codes.street = streets.street;
+
+update postal_codes
+set city_id = cities.id
+from cities
+where postal_codes.city = cities.city;
+
+alter table postal_codes
+    drop column building_number,
+    drop column street,
+    drop column city;
+
+drop table postal_codes_tmp;
+
+--------------------------------------------------------
 create table if not exists regions
 (
     id      serial primary key not null,
@@ -271,7 +338,7 @@ create table if not exists countries
 (
     id      serial primary key not null,
     city_id integer,
-    country varchar(30)        not null,
+    country varchar(2)         not null,
     city    varchar(50)        not null,
     FOREIGN KEY (city_id) REFERENCES cities (id)
 );
@@ -280,7 +347,7 @@ create table if not exists countries_tmp
 (
     id      serial primary key not null,
     city_id integer,
-    country varchar(30)        not null,
+    country varchar(2)         not null,
     city    varchar(50)        not null,
     FOREIGN KEY (city_id) REFERENCES cities (id)
 );
@@ -314,19 +381,21 @@ create table if not exists addresses
     house_id        integer,
     street_id       integer,
     city_id         integer,
+    postal_code_id  integer,
     country_id      integer,
     region_id       integer,
     building_number varchar(50)        not null,
     street          varchar(100)       not null,
     city            varchar(50)        not null,
-    country         varchar(50)        not null,
+    country         varchar(2)         not null,
     region          varchar(50)        not null,
     postal_code     varchar(50)        not null,
     FOREIGN KEY (house_id) REFERENCES houses (id),
     FOREIGN KEY (street_id) REFERENCES streets (id),
     FOREIGN KEY (city_id) REFERENCES cities (id),
     FOREIGN KEY (country_id) REFERENCES countries (id),
-    FOREIGN KEY (region_id) REFERENCES regions (id)
+    FOREIGN KEY (region_id) REFERENCES regions (id),
+    FOREIGN KEY (region_id) REFERENCES postal_codes (id)
 );
 
 COPY addresses (country, postal_code, region, city, street, building_number)
@@ -357,11 +426,17 @@ set house_id = houses.id
 from houses
 where addresses.building_number = houses.building_number;
 
+update addresses
+set postal_code_id = postal_codes.id
+from postal_codes
+where addresses.postal_code = postal_codes.postal_code;
+
 alter table addresses
     drop column country,
     drop column city,
     drop column region,
     drop column street,
+    drop column postal_code,
     drop column building_number;
 
 --------------------------------------------------------
@@ -380,7 +455,7 @@ create table if not exists customers
     birth_date              date,
     gender                  varchar(50)        not null,
     marital_status          varchar(50)        not null,
-    country                 varchar(50)        not null,
+    country                 varchar(2)         not null,
     postal_code             varchar(50)        not null,
     region                  varchar(50)        not null,
     city                    varchar(50)        not null,
@@ -413,14 +488,28 @@ from genders
 where customers.gender = genders.gender;
 
 update customers
+set address_id = ad.ad_id
+from (
+         select addresses.id as ad_id, *
+         from addresses
+                  join countries c on addresses.country_id = c.id
+                  join regions r on addresses.region_id = r.id
+                  join cities c2 on addresses.city_id = c2.id
+                  join streets s on addresses.street_id = s.id
+                  join houses h on addresses.house_id = h.id
+                  join postal_codes pc on addresses.postal_code_id = pc.id
+     ) ad
+where customers.country = ad.country
+  and customers.city = ad.city
+  and customers.region = ad.region
+  and customers.street = ad.street
+  and customers.building_number = ad.building_number
+  and customers.postal_code = ad.postal_code;
+
+update customers
 set gender_id = marital_statuses.id
 from marital_statuses
 where customers.marital_status = marital_statuses.marital_status;
-
-update customers
-set address_id = addresses.id
-from addresses
-where customers.postal_code = addresses.postal_code;
 
 alter table customers
     drop column title,
