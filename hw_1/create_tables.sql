@@ -8,8 +8,9 @@ drop table if exists genders_tmp;
 drop table if exists marital_statuses;
 drop table if exists marital_statuses_tmp;
 drop table if exists addresses;
-drop table if exists countries;
 drop table if exists regions;
+drop table if exists countries;
+drop table if exists countries_tmp;
 drop table if exists cities;
 drop table if exists cities_tmp;
 drop table if exists streets;
@@ -17,6 +18,7 @@ drop table if exists streets_tmp;
 drop table if exists houses;
 drop table if exists houses_tmp;
 
+--------------------------------------------------------
 create temp table if not exists titles_tmp
 (
     id    serial primary key not null,
@@ -40,6 +42,7 @@ insert into titles
 select distinct on (title) *
 from titles_tmp;
 
+--------------------------------------------------------
 create temp table if not exists languages_tmp
 (
     id       serial primary key not null,
@@ -63,6 +66,7 @@ insert into languages
 select distinct on (language) *
 from languages_tmp;
 
+--------------------------------------------------------
 create temp table if not exists genders_tmp
 (
     id     serial primary key not null,
@@ -86,6 +90,7 @@ insert into genders
 select distinct on (gender) *
 from genders_tmp;
 
+--------------------------------------------------------
 create temp table if not exists marital_statuses_tmp
 (
     id             serial primary key not null,
@@ -126,8 +131,10 @@ create table if not exists houses_tmp
 COPY houses_tmp (building_number)
     FROM PROGRAM 'cut -d "," -f 13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete from houses_tmp
-where building_number is null or building_number = '';
+delete
+from houses_tmp
+where building_number is null
+   or building_number = '';
 
 insert into houses
 select distinct on (building_number) *
@@ -157,8 +164,10 @@ create table if not exists streets_tmp
 COPY streets_tmp (street, building_number)
     FROM PROGRAM 'cut -d "," -f 12,13 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete from streets_tmp
-where street is null or street = '';
+delete
+from streets_tmp
+where street is null
+   or street = '';
 
 insert into streets (street, building_number)
 select distinct street, building_number
@@ -196,8 +205,10 @@ create table if not exists cities_tmp
 COPY cities_tmp (city, street)
     FROM PROGRAM 'cut -d "," -f 11,12 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
 
-delete from cities_tmp
-where city is null or city = '';
+delete
+from cities_tmp
+where city is null
+   or city = '';
 
 insert into cities (city, street)
 select distinct city, street
@@ -234,6 +245,7 @@ where regions.city = cities.city;
 alter table regions
     drop column city;
 
+--------------------------------------------------------
 create table if not exists countries
 (
     id      serial primary key not null,
@@ -243,8 +255,26 @@ create table if not exists countries
     FOREIGN KEY (city_id) REFERENCES cities (id)
 );
 
-COPY countries (country, city)
+create table if not exists countries_tmp
+(
+    id      serial primary key not null,
+    city_id integer,
+    country varchar(30)        not null,
+    city    varchar(50)        not null,
+    FOREIGN KEY (city_id) REFERENCES cities (id)
+);
+
+COPY countries_tmp (country, city)
     FROM PROGRAM 'cut -d "," -f 8,11 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete
+from countries_tmp
+where country is null
+   or country = '';
+
+insert into countries (country, city)
+select distinct country, city
+from countries_tmp;
 
 update countries
 set city_id = cities.id
@@ -254,7 +284,9 @@ where countries.city = cities.city;
 alter table countries
     drop column city;
 
+drop table countries_tmp;
 
+--------------------------------------------------------
 create table if not exists addresses
 (
     id              serial primary key not null,
@@ -311,6 +343,7 @@ alter table addresses
     drop column street,
     drop column building_number;
 
+--------------------------------------------------------
 create table if not exists customers
 (
     id                      serial primary key not null,
