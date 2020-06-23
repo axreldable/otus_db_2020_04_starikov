@@ -11,6 +11,7 @@ drop table if exists addresses;
 drop table if exists countries;
 drop table if exists regions;
 drop table if exists cities;
+drop table if exists cities_tmp;
 drop table if exists streets;
 drop table if exists streets_tmp;
 drop table if exists houses;
@@ -183,8 +184,24 @@ create table if not exists cities
     FOREIGN KEY (street_id) REFERENCES streets (id)
 );
 
-COPY cities (city, street)
+create table if not exists cities_tmp
+(
+    id        serial primary key not null,
+    street_id integer,
+    city      varchar(50)        not null,
+    street    varchar(100)       not null,
+    FOREIGN KEY (street_id) REFERENCES streets (id)
+);
+
+COPY cities_tmp (city, street)
     FROM PROGRAM 'cut -d "," -f 11,12 /tmp/input_data/some_customers.csv' WITH (FORMAT CSV, HEADER);
+
+delete from cities_tmp
+where city is null or city = '';
+
+insert into cities (city, street)
+select distinct city, street
+from cities_tmp;
 
 update cities
 set street_id = streets.id
@@ -194,6 +211,9 @@ where cities.street = streets.street;
 alter table cities
     drop column street;
 
+drop table cities_tmp;
+
+--------------------------------------------------------
 create table if not exists regions
 (
     id      serial primary key not null,
@@ -249,8 +269,8 @@ create table if not exists addresses
     country         varchar(50)        not null,
     region          varchar(50)        not null,
     postal_code     varchar(50)        not null,
-    FOREIGN KEY (house_id) REFERENCES cities (id),
-    FOREIGN KEY (street_id) REFERENCES cities (id),
+    FOREIGN KEY (house_id) REFERENCES houses (id),
+    FOREIGN KEY (street_id) REFERENCES streets (id),
     FOREIGN KEY (city_id) REFERENCES cities (id),
     FOREIGN KEY (country_id) REFERENCES countries (id),
     FOREIGN KEY (region_id) REFERENCES regions (id)
