@@ -472,6 +472,10 @@ COPY customers (title, first_name, last_name, correspondence_language, birth_dat
                 postal_code, region, city, street, building_number)
     FROM '/tmp/input_data/some_customers.csv' DELIMITER ',' CSV HEADER;
 
+delete
+from customers
+where (first_name is null or first_name = '') and (last_name is null or last_name = '');
+
 update customers
 set title_id = titles.id
 from titles
