@@ -1,3 +1,4 @@
+drop table if exists categories;
 drop table if exists price_logs;
 drop table if exists prices;
 drop table if exists currency;
@@ -181,11 +182,21 @@ create table if not exists suppliers
     name varchar(100)
 );
 --------------------------------------------------------
+create table if not exists categories
+(
+    id       serial primary key not null,
+    parent_id integer,
+    category  varchar(255),
+    FOREIGN KEY (parent_id) REFERENCES categories (id)
+);
+--------------------------------------------------------
 create table if not exists products
 (
     id            serial primary key not null,
+    category_id integer,
     name          varchar(100),
-    creation_date date
+    creation_date date,
+    FOREIGN KEY (category_id) REFERENCES categories (id)
 );
 --------------------------------------------------------
 create table if not exists products_to_vendors
