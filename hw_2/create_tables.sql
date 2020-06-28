@@ -34,30 +34,40 @@ create table if not exists titles
     id    serial primary key not null,
     title varchar(30)        not null
 );
+COMMENT ON TABLE titles IS 'A title of the customer.';
+COMMENT ON COLUMN titles.title IS 'Possible variants: Dr., Miss, Mr., etc.';
 --------------------------------------------------------
 create table if not exists languages
 (
     id       serial primary key not null,
     language varchar(30)        not null
 );
+COMMENT ON TABLE languages IS 'Customer language.';
+COMMENT ON COLUMN languages.language IS '2 symbols language code: CS, DE, etc.';
 --------------------------------------------------------
 create table if not exists genders
 (
     id     serial primary key not null,
     gender varchar(30)        not null
 );
+COMMENT ON TABLE genders IS 'Customer gender.';
+COMMENT ON COLUMN genders.gender IS 'Possible variants: Female, Male, Unknown, etc.';
 --------------------------------------------------------
 create table if not exists marital_statuses
 (
     id             serial primary key not null,
     marital_status varchar(30)
 );
+COMMENT ON TABLE marital_statuses IS 'Customer marital status.';
+COMMENT ON COLUMN marital_statuses.marital_status IS 'Possible variants: single etc.';
 --------------------------------------------------------
 create table if not exists houses
 (
     id              serial primary key not null,
     building_number varchar(50)        not null
 );
+COMMENT ON TABLE houses IS 'House numbers for addresses.';
+COMMENT ON COLUMN houses.building_number IS 'Possible variants: 100/10 10/7, 101 etc.';
 --------------------------------------------------------
 create table if not exists streets
 (
@@ -66,6 +76,7 @@ create table if not exists streets
     street   varchar(100)       not null,
     FOREIGN KEY (house_id) REFERENCES houses (id)
 );
+COMMENT ON TABLE streets IS 'Street names for addresses. The street contains particular building numbers.';
 --------------------------------------------------------
 create table if not exists cities
 (
@@ -74,6 +85,7 @@ create table if not exists cities
     city      varchar(50)        not null,
     FOREIGN KEY (street_id) REFERENCES streets (id)
 );
+COMMENT ON TABLE cities IS 'Cities names for addresses. The city contains particular streets.';
 --------------------------------------------------------
 create table if not exists postal_codes
 (
@@ -86,6 +98,7 @@ create table if not exists postal_codes
     FOREIGN KEY (street_id) REFERENCES streets (id),
     FOREIGN KEY (city_id) REFERENCES cities (id)
 );
+COMMENT ON TABLE postal_codes IS 'Postal code depends on the city, street and building number.';
 --------------------------------------------------------
 create table if not exists regions
 (
@@ -94,6 +107,7 @@ create table if not exists regions
     region  varchar(30)        not null,
     FOREIGN KEY (city_id) REFERENCES cities (id)
 );
+COMMENT ON TABLE regions IS 'Regions names for addresses. The region contains particular cities.';
 --------------------------------------------------------
 create table if not exists countries
 (
@@ -102,6 +116,7 @@ create table if not exists countries
     country varchar(2)         not null,
     FOREIGN KEY (city_id) REFERENCES cities (id)
 );
+COMMENT ON TABLE countries IS 'Countries names for addresses. The country contains particular cities.';
 --------------------------------------------------------
 create table if not exists addresses
 (
@@ -119,6 +134,7 @@ create table if not exists addresses
     FOREIGN KEY (region_id) REFERENCES regions (id),
     FOREIGN KEY (region_id) REFERENCES postal_codes (id)
 );
+COMMENT ON TABLE addresses IS 'Denormalize representation of address. Consistency control works on the client.';
 --------------------------------------------------------
 create table if not exists customers
 (
@@ -135,6 +151,7 @@ create table if not exists customers
     FOREIGN KEY (gender_id) REFERENCES genders (id),
     FOREIGN KEY (marital_status_id) REFERENCES marital_statuses (id)
 );
+COMMENT ON TABLE customers IS 'Customers table. Each customer can have several addresses and vice a versa each address has several customers.';
 --------------------------------------------------------
 create table if not exists customers_to_addresses
 (
@@ -144,12 +161,15 @@ create table if not exists customers_to_addresses
     FOREIGN KEY (customer_id) REFERENCES customers (id),
     FOREIGN KEY (address_id) REFERENCES addresses (id)
 );
+COMMENT ON TABLE customers_to_addresses IS 'Many to many connection between customers and addresses';
 --------------------------------------------------------
 create table if not exists order_statues
 (
     id   serial primary key not null,
-    name varchar(50)
+    status varchar(50)
 );
+COMMENT ON TABLE order_statues IS 'Statuses of the orders.';
+COMMENT ON COLUMN order_statues.status IS 'Possible variants: client_buying, approved, assembling at warehouse  etc.';
 --------------------------------------------------------
 create table if not exists orders
 (
@@ -161,6 +181,9 @@ create table if not exists orders
     FOREIGN KEY (customer_id) REFERENCES customers (id),
     FOREIGN KEY (address_id) REFERENCES addresses (id)
 );
+COMMENT ON TABLE orders IS 'Customer orders. Can be to the address which is not belonged to the client.';
+COMMENT ON COLUMN orders.creation_date IS 'Date of the order creation.';
+COMMENT ON COLUMN orders.delivery_date IS 'Date of the order delivery.';
 --------------------------------------------------------
 create table if not exists order_logs
 (
@@ -172,18 +195,21 @@ create table if not exists order_logs
     FOREIGN KEY (status_id) REFERENCES order_statues (id),
     FOREIGN KEY (order_id) REFERENCES orders (id)
 );
+COMMENT ON TABLE order_logs IS 'Change log of the order changing. Status with latest datetime is active.';
 --------------------------------------------------------
 create table if not exists vendors
 (
     id   serial primary key not null,
     name varchar(100)
 );
+COMMENT ON TABLE vendors IS 'Vendor of the product.';
 --------------------------------------------------------
 create table if not exists suppliers
 (
     id   serial primary key not null,
     name varchar(100)
 );
+COMMENT ON TABLE suppliers IS 'Supplier of the product.';
 --------------------------------------------------------
 create table if not exists categories
 (
@@ -192,6 +218,7 @@ create table if not exists categories
     category  varchar(255),
     FOREIGN KEY (parent_id) REFERENCES categories (id)
 );
+COMMENT ON TABLE categories IS 'Category of the product. Support tree hierarchy.';
 --------------------------------------------------------
 create table if not exists products
 (
@@ -201,6 +228,8 @@ create table if not exists products
     creation_date date,
     FOREIGN KEY (category_id) REFERENCES categories (id)
 );
+COMMENT ON TABLE products IS 'Product table.';
+COMMENT ON COLUMN products.creation_date IS 'Date of the product creation.';
 --------------------------------------------------------
 create table if not exists products_to_vendors
 (
@@ -210,6 +239,7 @@ create table if not exists products_to_vendors
     FOREIGN KEY (vendor_id) REFERENCES vendors (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
+COMMENT ON TABLE products_to_vendors IS 'Many to many connection between products and vendors';
 --------------------------------------------------------
 create table if not exists products_to_suppliers
 (
@@ -219,6 +249,7 @@ create table if not exists products_to_suppliers
     FOREIGN KEY (supplier_id) REFERENCES suppliers (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
+COMMENT ON TABLE products_to_suppliers IS 'Many to many connection between products and suppliers';
 --------------------------------------------------------
 create table if not exists orders_to_products
 (
@@ -228,12 +259,15 @@ create table if not exists orders_to_products
     FOREIGN KEY (order_id) REFERENCES orders (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
+COMMENT ON TABLE orders_to_products IS 'Many to many connection between orders and products';
 --------------------------------------------------------
 create table if not exists currency
 (
     id   serial primary key not null,
     code varchar(3)
 );
+COMMENT ON TABLE currency IS 'Currency dictionary';
+COMMENT ON COLUMN currency.code IS 'Possible variants: RUB, USD, EUR etc.';
 --------------------------------------------------------
 create table if not exists prices
 (
@@ -244,6 +278,7 @@ create table if not exists prices
     FOREIGN KEY (currency_id) REFERENCES currency (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
+COMMENT ON TABLE prices IS 'Price of the product';
 --------------------------------------------------------
 create table if not exists price_logs
 (
@@ -253,6 +288,7 @@ create table if not exists price_logs
     datetime date,
     FOREIGN KEY (price_id) REFERENCES prices (id)
 );
+COMMENT ON TABLE order_logs IS 'Change log of the price changing. Price with latest datetime is active.';
 --------------------------------------------------------
 create table if not exists category_params
 (
@@ -261,6 +297,8 @@ create table if not exists category_params
     param_type    varchar(50),
     default_value varchar(1024)
 );
+COMMENT ON TABLE category_params IS 'Category param table.';
+COMMENT ON COLUMN category_params.param_type IS 'A type of the parameter.';
 --------------------------------------------------------
 create table if not exists product_params
 (
@@ -274,6 +312,7 @@ create table if not exists product_params
     FOREIGN KEY (product_id) REFERENCES products (id),
     FOREIGN KEY (category_param_id) REFERENCES category_params (id)
 );
+COMMENT ON TABLE product_params IS 'Table with params with different types.';
 --------------------------------------------------------
 create table if not exists cross_category_params
 (
@@ -283,4 +322,5 @@ create table if not exists cross_category_params
     FOREIGN KEY (category_id) REFERENCES categories (id),
     FOREIGN KEY (category_param_id) REFERENCES category_params (id)
 );
+COMMENT ON TABLE orders_to_products IS 'Many to many connection between categories and category_params';
 --------------------------------------------------------
