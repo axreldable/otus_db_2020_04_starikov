@@ -165,7 +165,7 @@ COMMENT ON TABLE customers_to_addresses IS 'Many to many connection between cust
 --------------------------------------------------------
 create table if not exists order_statues
 (
-    id   serial primary key not null,
+    id     serial primary key not null,
     status varchar(50)
 );
 COMMENT ON TABLE order_statues IS 'Statuses of the orders.';
