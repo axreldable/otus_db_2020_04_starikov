@@ -1,13 +1,16 @@
-drop table if exists categories;
-drop table if exists price_logs;
-drop table if exists prices;
-drop table if exists currency;
+drop table if exists cross_category_params;
+drop table if exists category_params;
+drop table if exists product_params;
 drop table if exists products_to_vendors;
 drop table if exists products_to_suppliers;
 drop table if exists vendors;
 drop table if exists suppliers;
 drop table if exists orders_to_products;
+drop table if exists price_logs;
+drop table if exists prices;
+drop table if exists currency;
 drop table if exists products;
+drop table if exists categories;
 drop table if exists order_logs;
 drop table if exists order_statues;
 drop table if exists orders;
@@ -249,5 +252,35 @@ create table if not exists price_logs
     comment  varchar(1024),
     datetime date,
     FOREIGN KEY (price_id) REFERENCES prices (id)
+);
+--------------------------------------------------------
+create table if not exists category_params
+(
+    id       serial primary key not null,
+    param_name  varchar(1024),
+    param_type varchar(50),
+    default_value  varchar(1024)
+);
+--------------------------------------------------------
+create table if not exists product_params
+(
+    id       serial primary key not null,
+    product_id integer,
+    category_param_id integer,
+    varchar_value  varchar(1024),
+    int_value integer,
+    float_value float,
+    text_value text,
+    FOREIGN KEY (product_id) REFERENCES products (id),
+    FOREIGN KEY (category_param_id) REFERENCES category_params (id)
+);
+--------------------------------------------------------
+create table if not exists cross_category_params
+(
+    id       serial primary key not null,
+    category_id  integer,
+    category_param_id integer,
+    FOREIGN KEY (category_id) REFERENCES categories (id),
+    FOREIGN KEY (category_param_id) REFERENCES category_params (id)
 );
 --------------------------------------------------------
