@@ -1,6 +1,6 @@
 drop table if exists cross_category_params;
-drop table if exists category_params;
 drop table if exists product_params;
+drop table if exists category_params;
 drop table if exists products_to_vendors;
 drop table if exists products_to_suppliers;
 drop table if exists vendors;
@@ -187,7 +187,7 @@ create table if not exists suppliers
 --------------------------------------------------------
 create table if not exists categories
 (
-    id       serial primary key not null,
+    id        serial primary key not null,
     parent_id integer,
     category  varchar(255),
     FOREIGN KEY (parent_id) REFERENCES categories (id)
@@ -196,7 +196,7 @@ create table if not exists categories
 create table if not exists products
 (
     id            serial primary key not null,
-    category_id integer,
+    category_id   integer,
     name          varchar(100),
     creation_date date,
     FOREIGN KEY (category_id) REFERENCES categories (id)
@@ -239,7 +239,7 @@ create table if not exists prices
 (
     id          serial primary key not null,
     currency_id integer,
-    product_id integer,
+    product_id  integer,
     price       decimal,
     FOREIGN KEY (currency_id) REFERENCES currency (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
@@ -256,29 +256,29 @@ create table if not exists price_logs
 --------------------------------------------------------
 create table if not exists category_params
 (
-    id       serial primary key not null,
-    param_name  varchar(1024),
-    param_type varchar(50),
-    default_value  varchar(1024)
+    id            serial primary key not null,
+    param_name    varchar(1024),
+    param_type    varchar(50),
+    default_value varchar(1024)
 );
 --------------------------------------------------------
 create table if not exists product_params
 (
-    id       serial primary key not null,
-    product_id integer,
+    id                serial primary key not null,
+    product_id        integer,
     category_param_id integer,
-    varchar_value  varchar(1024),
-    int_value integer,
-    float_value float,
-    text_value text,
+    varchar_value     varchar(1024),
+    int_value         integer,
+    float_value       float,
+    text_value        text,
     FOREIGN KEY (product_id) REFERENCES products (id),
     FOREIGN KEY (category_param_id) REFERENCES category_params (id)
 );
 --------------------------------------------------------
 create table if not exists cross_category_params
 (
-    id       serial primary key not null,
-    category_id  integer,
+    id                serial primary key not null,
+    category_id       integer,
     category_param_id integer,
     FOREIGN KEY (category_id) REFERENCES categories (id),
     FOREIGN KEY (category_param_id) REFERENCES category_params (id)
