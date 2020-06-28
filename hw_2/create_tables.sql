@@ -1,3 +1,4 @@
+drop table if exists customers_to_addresses;
 drop table if exists customers;
 drop table if exists titles;
 drop table if exists languages;
@@ -44,9 +45,9 @@ create table if not exists houses
 --------------------------------------------------------
 create table if not exists streets
 (
-    id              serial primary key not null,
-    house_id        integer,
-    street          varchar(100)       not null,
+    id       serial primary key not null,
+    house_id integer,
+    street   varchar(100)       not null,
     FOREIGN KEY (house_id) REFERENCES houses (id)
 );
 --------------------------------------------------------
@@ -60,11 +61,11 @@ create table if not exists cities
 --------------------------------------------------------
 create table if not exists postal_codes
 (
-    id              serial primary key not null,
-    house_id        integer,
-    street_id       integer,
-    city_id         integer,
-    postal_code     varchar(50)        not null,
+    id          serial primary key not null,
+    house_id    integer,
+    street_id   integer,
+    city_id     integer,
+    postal_code varchar(50)        not null,
     FOREIGN KEY (house_id) REFERENCES houses (id),
     FOREIGN KEY (street_id) REFERENCES streets (id),
     FOREIGN KEY (city_id) REFERENCES cities (id)
@@ -88,13 +89,13 @@ create table if not exists countries
 --------------------------------------------------------
 create table if not exists addresses
 (
-    id              serial primary key not null,
-    house_id        integer,
-    street_id       integer,
-    city_id         integer,
-    postal_code_id  integer,
-    country_id      integer,
-    region_id       integer,
+    id             serial primary key not null,
+    house_id       integer,
+    street_id      integer,
+    city_id        integer,
+    postal_code_id integer,
+    country_id     integer,
+    region_id      integer,
     FOREIGN KEY (house_id) REFERENCES houses (id),
     FOREIGN KEY (street_id) REFERENCES streets (id),
     FOREIGN KEY (city_id) REFERENCES cities (id),
@@ -105,19 +106,26 @@ create table if not exists addresses
 --------------------------------------------------------
 create table if not exists customers
 (
-    id                      serial primary key not null,
-    title_id                integer,
-    language_id             integer,
-    gender_id               integer,
-    marital_status_id       integer,
-    address_id              integer,
-    first_name              varchar(50)        not null,
-    last_name               varchar(50)        not null,
-    birth_date              date,
+    id                serial primary key not null,
+    title_id          integer,
+    language_id       integer,
+    gender_id         integer,
+    marital_status_id integer,
+    first_name        varchar(50)        not null,
+    last_name         varchar(50)        not null,
+    birth_date        date,
     FOREIGN KEY (title_id) REFERENCES titles (id),
     FOREIGN KEY (language_id) REFERENCES languages (id),
     FOREIGN KEY (gender_id) REFERENCES genders (id),
-    FOREIGN KEY (marital_status_id) REFERENCES marital_statuses (id),
+    FOREIGN KEY (marital_status_id) REFERENCES marital_statuses (id)
+);
+--------------------------------------------------------
+create table if not exists customers_to_addresses
+(
+    id          serial primary key not null,
+    customer_id integer,
+    address_id  integer,
+    FOREIGN KEY (customer_id) REFERENCES customers (id),
     FOREIGN KEY (address_id) REFERENCES addresses (id)
 );
 --------------------------------------------------------
