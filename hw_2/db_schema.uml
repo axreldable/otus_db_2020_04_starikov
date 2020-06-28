@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>184a3fa7-b7e1-454e-898c-96c7c2f81669.SCHEMA:db</OriginalElement>
+  <nodes>
+    <node x="928.7434829059829" y="1040.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.currency</node>
+    <node x="1089.5" y="1040.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.vendors</node>
+    <node x="1438.0351495726495" y="151.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.streets</node>
+    <node x="2427.8445512820517" y="1256.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.order_logs</node>
+    <node x="1583.3333333333333" y="519.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.regions</node>
+    <node x="1755.3333333333335" y="497.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.postal_codes</node>
+    <node x="1398.368482905983" y="0.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.houses</node>
+    <node x="2123.333333333333" y="530.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.marital_statuses</node>
+    <node x="1966.3333333333335" y="530.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.titles</node>
+    <node x="0.0" y="1278.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cross_category_params</node>
+    <node x="1410.3333333333333" y="519.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.countries</node>
+    <node x="2185.8445512820517" y="1029.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers_to_addresses</node>
+    <node x="283.0" y="1234.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.product_params</node>
+    <node x="2479.8445512820517" y="1040.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.order_statues</node>
+    <node x="788.5000000000001" y="1495.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.price_logs</node>
+    <node x="2351.333333333333" y="530.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.genders</node>
+    <node x="984.2500000000001" y="1278.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products_to_vendors</node>
+    <node x="2248.0945512820517" y="724.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers</node>
+    <node x="506.70000000000005" y="1040.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.suppliers</node>
+    <node x="176.5" y="1018.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.category_params</node>
+    <node x="289.5333333333333" y="779.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.categories</node>
+    <node x="1461.868482905983" y="324.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cities</node>
+    <node x="1401.868482905983" y="1007.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders</node>
+    <node x="2528.333333333333" y="530.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.languages</node>
+    <node x="1268.618482905983" y="1278.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders_to_products</node>
+    <node x="751.7434829059829" y="1018.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products</node>
+    <node x="522.0000000000001" y="1278.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products_to_suppliers</node>
+    <node x="805.0000000000001" y="1267.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.prices</node>
+    <node x="1397.368482905983" y="735.0">184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cross_category_params" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.category_params">
+      <point x="65.75" y="-61.5" />
+      <point x="197.25" y="1214.0" />
+      <point x="230.25" y="1214.0" />
+      <point x="-53.75" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.streets" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.houses">
+      <point x="0.0" y="-61.5" />
+      <point x="1516.5351495726495" y="126.0" />
+      <point x="1508.868482905983" y="126.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.genders">
+      <point x="23.875" y="-116.5" />
+      <point x="2367.4695512820517" y="694.0" />
+      <point x="2429.833333333333" y="694.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cross_category_params" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.categories">
+      <point x="-65.75" y="-61.5" />
+      <point x="65.75" y="987.0" />
+      <point x="378.5333333333333" y="987.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.postal_codes" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.houses">
+      <point x="63.66666666666674" y="-83.5" />
+      <point x="1914.5" y="477.0" />
+      <point x="1874.6666666666667" y="477.0" />
+      <point x="1874.6666666666667" y="126.0" />
+      <point x="1582.5351495726497" y="126.0" />
+      <point x="73.66666666666674" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.streets">
+      <point x="-43.75" y="-105.5" />
+      <point x="1441.118482905983" y="694.0" />
+      <point x="1388.8333333333333" y="694.0" />
+      <point x="1388.8333333333333" y="299.0" />
+      <point x="1464.2018162393163" y="299.0" />
+      <point x="-52.33333333333326" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders_to_products" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders">
+      <point x="57.5" y="-61.5" />
+      <point x="-39.25" y="83.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.prices" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products">
+      <point x="-38.25" y="-72.5" />
+      <point x="843.2500000000001" y="1214.0" />
+      <point x="830.2434829059829" y="1214.0" />
+      <point x="0.0" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.houses">
+      <point x="-72.91666666666674" y="-105.5" />
+      <point x="1411.9518162393163" y="704.0" />
+      <point x="1371.8237179487182" y="704.0" />
+      <point x="1371.8237179487182" y="126.0" />
+      <point x="1435.2018162393163" y="126.0" />
+      <point x="-73.66666666666674" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.regions">
+      <point x="43.75" y="-105.5" />
+      <point x="1528.618482905983" y="694.0" />
+      <point x="1659.3333333333333" y="694.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products_to_suppliers" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products">
+      <point x="65.75" y="-61.5" />
+      <point x="719.2500000000001" y="1214.0" />
+      <point x="798.8434829059829" y="1214.0" />
+      <point x="-31.399999999999977" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers_to_addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers">
+      <point x="68.5" y="-61.5" />
+      <point x="47.75" y="116.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.postal_codes">
+      <point x="72.91666666666674" y="-105.5" />
+      <point x="1557.7851495726497" y="704.0" />
+      <point x="1850.8333333333335" y="704.0" />
+      <point x="0.0" y="83.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers">
+      <point x="39.25" y="-83.5" />
+      <point x="1519.618482905983" y="987.0" />
+      <point x="2295.8445512820517" y="987.0" />
+      <point x="-47.75" y="116.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.order_logs" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders">
+      <point x="-46.5" y="-83.5" />
+      <point x="2474.3445512820517" y="1214.0" />
+      <point x="1519.618482905983" y="1214.0" />
+      <point x="39.25" y="83.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.languages">
+      <point x="71.625" y="-116.5" />
+      <point x="2415.2195512820517" y="704.0" />
+      <point x="2613.833333333333" y="704.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.product_params" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products">
+      <point x="54.75" y="-105.5" />
+      <point x="447.25" y="1204.0" />
+      <point x="767.4434829059829" y="1204.0" />
+      <point x="-62.799999999999955" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.postal_codes" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cities">
+      <point x="-63.66666666666674" y="-83.5" />
+      <point x="1787.1666666666665" y="467.0" />
+      <point x="1579.993482905983" y="467.0" />
+      <point x="50.625" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.countries">
+      <point x="14.583333333333258" y="-105.5" />
+      <point x="1499.4518162393163" y="704.0" />
+      <point x="1486.8333333333333" y="704.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cities" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.streets">
+      <point x="0.0" y="-61.5" />
+      <point x="1529.368482905983" y="299.0" />
+      <point x="1516.5351495726495" y="299.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cities">
+      <point x="-14.583333333333258" y="-105.5" />
+      <point x="1470.2851495726497" y="684.0" />
+      <point x="1399.8333333333333" y="684.0" />
+      <point x="1399.8333333333333" y="477.0" />
+      <point x="1478.743482905983" y="477.0" />
+      <point x="-50.625" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products_to_suppliers" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.suppliers">
+      <point x="-65.75" y="-61.5" />
+      <point x="587.7500000000001" y="1194.0" />
+      <point x="582.2" y="1194.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.categories">
+      <point x="0.0" y="-72.5" />
+      <point x="830.2434829059829" y="987.0" />
+      <point x="437.8666666666667" y="987.0" />
+      <point x="59.33333333333337" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.product_params" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.category_params">
+      <point x="-54.75" y="-105.5" />
+      <point x="53.75" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.order_logs" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.order_statues">
+      <point x="46.5" y="-83.5" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.regions" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cities">
+      <point x="0.0" y="-61.5" />
+      <point x="1659.3333333333333" y="477.0" />
+      <point x="1546.243482905983" y="477.0" />
+      <point x="16.875" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products_to_vendors" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.vendors">
+      <point x="60.25" y="-61.5" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.postal_codes" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.streets">
+      <point x="0.0" y="-83.5" />
+      <point x="1850.8333333333335" y="299.0" />
+      <point x="1568.8684829059828" y="299.0" />
+      <point x="52.33333333333326" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.prices" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.currency">
+      <point x="38.25" y="-72.5" />
+      <point x="919.7500000000001" y="1214.0" />
+      <point x="995.7434829059829" y="1214.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.countries" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.cities">
+      <point x="0.0" y="-61.5" />
+      <point x="1486.8333333333333" y="477.0" />
+      <point x="1512.493482905983" y="477.0" />
+      <point x="-16.875" y="61.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.price_logs" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.prices">
+      <point x="0.0" y="-72.5" />
+      <point x="0.0" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses">
+      <point x="-39.25" y="-83.5" />
+      <point x="-43.75" y="105.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.titles">
+      <point x="-71.625" y="-116.5" />
+      <point x="2271.9695512820517" y="704.0" />
+      <point x="2034.8333333333335" y="704.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products_to_vendors" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products">
+      <point x="-60.25" y="-61.5" />
+      <point x="1044.5" y="1204.0" />
+      <point x="861.6434829059829" y="1204.0" />
+      <point x="31.399999999999977" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.categories" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.categories">
+      <point x="-59.33333333333326" y="61.5" />
+      <point x="319.20000000000005" y="922.0" />
+      <point x="269.5333333333333" y="922.0" />
+      <point x="269.5333333333333" y="840.5" />
+      <point x="-89.0" y="-0.0" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers_to_addresses" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses">
+      <point x="-68.5" y="-61.5" />
+      <point x="2254.3445512820517" y="977.0" />
+      <point x="1528.618482905983" y="977.0" />
+      <point x="43.75" y="105.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.orders_to_products" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.products">
+      <point x="-57.5" y="-61.5" />
+      <point x="1326.118482905983" y="1194.0" />
+      <point x="893.0434829059828" y="1194.0" />
+      <point x="62.799999999999955" y="72.5" />
+    </edge>
+    <edge source="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.customers" target="184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.marital_statuses">
+      <point x="-23.875" y="-116.5" />
+      <point x="2319.7195512820517" y="694.0" />
+      <point x="2227.333333333333" y="694.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4334558823529412" x="1350.0" y="820.0" />
+  <SelectedNodes>
+    <node>184a3fa7-b7e1-454e-898c-96c7c2f81669.TABLE:db.addresses</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

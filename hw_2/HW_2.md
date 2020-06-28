@@ -1,5 +1,8 @@
 # HW_2
 
+[Mysql create tables scripts](https://github.com/axreldable/otus_db_2020_04_starikov/blob/master/hw_2/create_tables_mysql.sql)
+[Workbench schema](https://github.com/axreldable/otus_db_2020_04_starikov/blob/master/hw_2/db_schema.mwb)
+
 ### Описание бизнес задачи
 База данных интернет магазина, которая содержит:
 - информацию о клиентах (customers)
