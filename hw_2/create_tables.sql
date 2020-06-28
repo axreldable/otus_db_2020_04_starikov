@@ -1,3 +1,6 @@
+drop table if exists price_logs;
+drop table if exists prices;
+drop table if exists currency;
 drop table if exists products_to_vendors;
 drop table if exists products_to_suppliers;
 drop table if exists vendors;
@@ -140,15 +143,15 @@ create table if not exists customers_to_addresses
 --------------------------------------------------------
 create table if not exists order_statues
 (
-    id          serial primary key not null,
+    id   serial primary key not null,
     name varchar(50)
 );
 --------------------------------------------------------
 create table if not exists orders
 (
-    id          serial primary key not null,
-    customer_id integer,
-    address_id  integer,
+    id            serial primary key not null,
+    customer_id   integer,
+    address_id    integer,
     creation_date date,
     delivery_date date,
     FOREIGN KEY (customer_id) REFERENCES customers (id),
@@ -157,38 +160,38 @@ create table if not exists orders
 --------------------------------------------------------
 create table if not exists order_logs
 (
-    id          serial primary key not null,
+    id        serial primary key not null,
     status_id integer,
     order_id  integer,
-    comment varchar(1024),
-    datetime date,
+    comment   varchar(1024),
+    datetime  date,
     FOREIGN KEY (status_id) REFERENCES order_statues (id),
     FOREIGN KEY (order_id) REFERENCES orders (id)
 );
 --------------------------------------------------------
 create table if not exists vendors
 (
-    id          serial primary key not null,
+    id   serial primary key not null,
     name varchar(100)
 );
 --------------------------------------------------------
 create table if not exists suppliers
 (
-    id          serial primary key not null,
+    id   serial primary key not null,
     name varchar(100)
 );
 --------------------------------------------------------
 create table if not exists products
 (
-    id          serial primary key not null,
-    name varchar(100),
+    id            serial primary key not null,
+    name          varchar(100),
     creation_date date
 );
 --------------------------------------------------------
 create table if not exists products_to_vendors
 (
-    id          serial primary key not null,
-    vendor_id integer,
+    id         serial primary key not null,
+    vendor_id  integer,
     product_id integer,
     FOREIGN KEY (vendor_id) REFERENCES vendors (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
@@ -198,17 +201,42 @@ create table if not exists products_to_suppliers
 (
     id          serial primary key not null,
     supplier_id integer,
-    product_id integer,
+    product_id  integer,
     FOREIGN KEY (supplier_id) REFERENCES suppliers (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
 --------------------------------------------------------
 create table if not exists orders_to_products
 (
-    id          serial primary key not null,
-    order_id integer,
-    product_id  integer,
+    id         serial primary key not null,
+    order_id   integer,
+    product_id integer,
     FOREIGN KEY (order_id) REFERENCES orders (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
+);
+--------------------------------------------------------
+create table if not exists currency
+(
+    id   serial primary key not null,
+    code varchar(3)
+);
+--------------------------------------------------------
+create table if not exists prices
+(
+    id          serial primary key not null,
+    currency_id integer,
+    product_id integer,
+    price       decimal,
+    FOREIGN KEY (currency_id) REFERENCES currency (id),
+    FOREIGN KEY (product_id) REFERENCES products (id)
+);
+--------------------------------------------------------
+create table if not exists price_logs
+(
+    id       serial primary key not null,
+    price_id integer,
+    comment  varchar(1024),
+    datetime date,
+    FOREIGN KEY (price_id) REFERENCES prices (id)
 );
 --------------------------------------------------------
