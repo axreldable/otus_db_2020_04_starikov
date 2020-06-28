@@ -1,3 +1,6 @@
+drop table if exists order_statues;
+drop table if exists orders;
+drop table if exists order_logs;
 drop table if exists customers_to_addresses;
 drop table if exists customers;
 drop table if exists titles;
@@ -127,5 +130,33 @@ create table if not exists customers_to_addresses
     address_id  integer,
     FOREIGN KEY (customer_id) REFERENCES customers (id),
     FOREIGN KEY (address_id) REFERENCES addresses (id)
+);
+--------------------------------------------------------
+create table if not exists order_statues
+(
+    id          serial primary key not null,
+    name varchar(50)
+);
+--------------------------------------------------------
+create table if not exists orders
+(
+    id          serial primary key not null,
+    customer_id integer,
+    address_id  integer,
+    creation_date date,
+    delivery_date date,
+    FOREIGN KEY (customer_id) REFERENCES customers (id),
+    FOREIGN KEY (address_id) REFERENCES addresses (id)
+);
+--------------------------------------------------------
+create table if not exists order_logs
+(
+    id          serial primary key not null,
+    status_id integer,
+    order_id  integer,
+    comment varchar(1024),
+    datetime date,
+    FOREIGN KEY (status_id) REFERENCES order_statues (id),
+    FOREIGN KEY (order_id) REFERENCES orders (id)
 );
 --------------------------------------------------------
