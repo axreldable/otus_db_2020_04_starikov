@@ -27,6 +27,8 @@ drop table if exists postal_codes;
 drop table if exists cities;
 drop table if exists streets;
 drop table if exists houses;
+drop table if exists product_statues;
+drop table if exists product_logs;
 
 --
 create table if not exists titles
@@ -212,13 +214,23 @@ create table if not exists categories
 )
     COMMENT = 'Category of the product. Support tree hierarchy.';
 --
+create table if not exists currency
+(
+    id   integer primary key auto_increment,
+    code varchar(3) comment 'Possible variants: RUB, USD, EUR etc.'
+)
+    COMMENT = 'Currency dictionary';
+--
 create table if not exists products
 (
     id            integer primary key auto_increment,
     category_id   integer,
+    currency_id   integer,
     name          varchar(100),
     creation_date date comment 'Date of the product creation.',
-    FOREIGN KEY (category_id) REFERENCES categories (id)
+    price         decimal,
+    FOREIGN KEY (category_id) REFERENCES categories (id),
+    FOREIGN KEY (currency_id) REFERENCES currency (id)
 )
     COMMENT = 'Product table.';
 --
@@ -252,33 +264,24 @@ create table if not exists orders_to_products
 )
     COMMENT = 'Many to many connection between orders and products';
 --
-create table if not exists currency
+create table if not exists product_statues
 (
-    id   integer primary key auto_increment,
-    code varchar(3) comment 'Possible variants: RUB, USD, EUR etc.'
+    id     integer primary key auto_increment,
+    status varchar(50) comment 'Possible variants: price changed, vendor changed etc.'
 )
-    COMMENT = 'Currency dictionary';
+    COMMENT = 'Statuses of the orders.';
 --
-create table if not exists prices
+create table if not exists product_logs
 (
-    id          integer primary key auto_increment,
-    currency_id integer,
-    product_id  integer,
-    price       decimal,
-    FOREIGN KEY (currency_id) REFERENCES currency (id),
+    id         integer primary key auto_increment,
+    status_id  integer,
+    product_id integer,
+    comment    varchar(1024),
+    datetime   date,
+    FOREIGN KEY (status_id) REFERENCES product_statues (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
 )
-    COMMENT = 'Price of the product';
---
-create table if not exists price_logs
-(
-    id       integer primary key auto_increment,
-    price_id integer,
-    comment  varchar(1024),
-    datetime date,
-    FOREIGN KEY (price_id) REFERENCES prices (id)
-)
-    COMMENT = 'Change log of the price changing. Price with latest datetime is active.';
+    COMMENT = 'Change log of the product changing.';
 --
 create table if not exists category_params
 (
