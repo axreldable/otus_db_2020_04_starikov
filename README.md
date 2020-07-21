@@ -15,3 +15,6 @@ Create a normalized schema for data from the some_customers.csv file.
 
 #### [HW_2](https://github.com/axreldable/otus_db_2020_04_starikov/tree/master/hw_2)
 Create a schema for an internet store.
+
+#### [HW_4](https://github.com/axreldable/otus_db_2020_04_starikov/tree/master/hw_4)
+Run postgres database and connect to it.
