@@ -35,7 +35,7 @@ login: test@mail.ru
 password: admin
 ```
 
-При подключении укажите Hostname/address:
+При подключении к серверу укажите:
 ```
 Hostname/address: postgres-db
 Username: postgres
