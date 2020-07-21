@@ -43,4 +43,4 @@ Password: postgres
 ```
 
 Скриншот по пути `http://localhost:5050/browser/`
-![pgadmin](https://github.com/axreldable/otus_db_2020_04_starikov/tree/master/hw_4/pgadmin.png)
+![pgadmin](https://github.com/axreldable/otus_db_2020_04_starikov/blob/master/hw_4/pgadmin.png)
