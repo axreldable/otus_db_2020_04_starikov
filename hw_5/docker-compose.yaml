@@ -1,0 +1,22 @@
+version: '3.5'
+
+# https://github.com/khezen/compose-postgres:
+services:
+  postgres-db:
+    container_name: postgres_otus_hw_5
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres-db:

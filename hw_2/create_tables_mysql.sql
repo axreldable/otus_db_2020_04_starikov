@@ -6,8 +6,6 @@ drop table if exists products_to_suppliers;
 drop table if exists vendors;
 drop table if exists suppliers;
 drop table if exists orders_to_products;
-drop table if exists price_logs;
-drop table if exists prices;
 drop table if exists currency;
 drop table if exists products;
 drop table if exists categories;
