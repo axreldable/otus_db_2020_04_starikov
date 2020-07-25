@@ -41,6 +41,8 @@ CREATE DATABASE internet_store
     TABLESPACE = slow_hdd
     CONNECTION LIMIT = -1;
 ------------------------------------------------------------------
+psql -d internet_store
+------------------------------------------------------------------
 REVOKE CREATE ON SCHEMA public FROM public;
 GRANT ALL ON SCHEMA public to admin_user; -- admin_user will be owner of all tables
 ------------------------------------------------------------------
