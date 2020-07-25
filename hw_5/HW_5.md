@@ -9,7 +9,8 @@ DDL скрипты для postgres
 4. Таблицы своего проекта, распределив их по схемам и
 табличным пространствам.
 
-Описание дз:
+Описание дз:  
+[DDL Commands](https://github.com/axreldable/otus_db_2020_04_starikov/blob/master/hw_5/commands.sql)
 ```
 - Создано 2 табличных пространства:
     - quick_ssd - в нем будут хранится таблицы, требующего быстрого доступа (customers + orders) 
