@@ -21,3 +21,6 @@ Run postgres database and connect to it.
 
 #### [HW_5](https://github.com/axreldable/otus_db_2020_04_starikov/tree/master/hw_5)
 Create database, tablespaces, roles, schemas, divide tables from HW_2 by schemas and tablespaces.
+
+#### [HW_6](https://github.com/axreldable/otus_db_2020_04_starikov/tree/master/hw_6)
+Implement some DML commands.
