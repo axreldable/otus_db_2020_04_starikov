@@ -3,7 +3,7 @@ version: '3.5'
 # https://github.com/khezen/compose-postgres:
 services:
   postgres-db:
-    container_name: postgres_otus_hw_5
+    container_name: postgres_otus_hw_6
     image: postgres
     restart: always
     ports:
@@ -15,7 +15,7 @@ services:
       - postgres
 
   pgadmin:
-    container_name: pgadmin_otus_hw_5
+    container_name: pgadmin_otus_hw_6
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: test@mail.ru
