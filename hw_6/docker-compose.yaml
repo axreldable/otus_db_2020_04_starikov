@@ -5,6 +5,8 @@ services:
   postgres-db:
     container_name: postgres_otus_hw_6
     image: postgres
+    volumes:
+      - ../hw_1/data:/tmp/input_data
     restart: always
     ports:
       - 5432:5432
