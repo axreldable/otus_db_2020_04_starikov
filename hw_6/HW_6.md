@@ -70,6 +70,15 @@ select title_id, first_name, last_name, title
 from customers c
          inner join titles t
                     using (title_id);
+-- Сам  delete - удалить всех customers, у которых есть title
+delete
+from customers
+where title_id in (
+    select t.title_id
+    from customers c
+             inner join titles t
+                        using (title_id)
+);
 ------------------------------------------------------------------
 -- 6. Приведите пример использования утилиты COPY
 COPY titles (title)
